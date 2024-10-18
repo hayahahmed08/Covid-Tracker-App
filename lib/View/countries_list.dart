@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:covidapp/Services/stats_services.dart'; // Your service class
-import 'package:shimmer/shimmer.dart'; // For loading shimmer effect
+import 'package:shimmer/shimmer.dart';
+import 'detail_screen.dart'; // Import DetailScreen
 
 class CountriesList extends StatefulWidget {
   const CountriesList({super.key});
@@ -98,40 +99,35 @@ class _CountriesListState extends State<CountriesList> {
                     return ListView.builder(
                       itemCount: filteredCountries.length,
                       itemBuilder: (context, index) {
-                        var countryData = filteredCountries[index];
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(
-                                  image: countryData['countryInfo']['flag'],
-                                  name: countryData['country'],
-                                  totalCases: countryData['cases'],
-                                  totalRecovered: countryData['recovered'],
-                                  totalDeaths: countryData['deaths'],
-                                  active: countryData['active'],
-                                  tests: countryData['tests'],
-                                  todayRecovered: countryData['todayRecovered'],
-                                  critical: countryData['critical'],
-                                ),
+                        var countryData = filteredCountries[index]; // Accessing country data
+                        return Column(
+                          children: [
+                            ListTile(
+                              // Country name
+                              title: Text(countryData['country']),
+
+                              // Cases information
+                              subtitle: Text('Cases: ${countryData['cases']}'),
+
+                              // Display flag image
+                              leading: SizedBox(
+                                height: 50,
+                                width: 50,
+                                child: Image.network(countryData['countryInfo']['flag']),
                               ),
-                            );
-                          },
-                          child: Column(
-                            children: [
-                              ListTile(
-                                title: Text(countryData['country']),
-                                subtitle: Text('Cases: ${countryData['cases']}'),
-                                leading: SizedBox(
-                                  height: 50,
-                                  width: 50,
-                                  child: Image.network(countryData['countryInfo']['flag']),
-                                ),
-                              ),
-                              const Divider(),
-                            ],
-                          ),
+
+                              // On tap, navigate to DetailScreen with the countryData
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DetailScreen(countryData: countryData),
+                                  ),
+                                );
+                              },
+                            ),
+                            const Divider(), // Divider between list items
+                          ],
                         );
                       },
                     );
@@ -145,6 +141,3 @@ class _CountriesListState extends State<CountriesList> {
     );
   }
 }
-
-// Define DetailScreen class as needed
-
