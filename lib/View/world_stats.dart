@@ -1,5 +1,6 @@
 import 'package:covidapp/Model/WorldStatsModel.dart';
 import 'package:covidapp/Services/stats_services.dart';
+import 'package:covidapp/View/countries_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -114,14 +115,19 @@ class _WorldStatsState extends State<WorldStats> with TickerProviderStateMixin {
                             ),
                           ),
                         ),
-                        Container(
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff1aa260),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Center(
-                            child: Text("Track Countries"),
+                        GestureDetector(
+                          onTap:(){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CountriesList()));
+                  }
+                          ,child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff1aa260),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Center(
+                              child: Text("Track Countries"),
+                            ),
                           ),
                         ),
                       ],

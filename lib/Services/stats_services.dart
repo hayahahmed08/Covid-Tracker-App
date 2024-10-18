@@ -16,3 +16,18 @@ if (response.statusCode ==200){
 }
   }
 }
+
+Future<List<dynamic>> countriesListApi()async{
+  var data;
+  final response = await http.get(Uri.parse(AppUrl.countriesList));
+  if (response.statusCode ==200){
+    var data = jsonDecode(response.body);
+    return data;
+
+  }else{
+    throw Exception('Error');
+  }
+}
+
+
+}
